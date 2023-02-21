@@ -23,7 +23,7 @@ from selenium.webdriver.common.actions.pointer_input import PointerInput
 # find_element_by_xpath("//input[@id='input']")
 
 
-class TestXueqiuAndroid(object):
+class TestXueqiuLogin(object):
 
     @classmethod
     def setup_class(cls):
