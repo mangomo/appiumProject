@@ -26,6 +26,7 @@ class TestWebview(object):
     def setup_class(cls):
         print("setup_class" + "----" + "被执行了")
         cls.driver = cls.restart_appium()
+        print(cls.driver.contexts)
 
     def setup_method(self):
         print("setup_method" + "----" + "被执行了")
@@ -61,6 +62,7 @@ class TestWebview(object):
         caps["appium:deviceName"] = "mango"
         caps["appium:appPackage"] = "com.xueqiu.android"
         caps["appium:appActivity"] = ".view.WelcomeActivityAlias"
+        caps['chromedriverExecutableDir'] = "D:\games&soft&Download\chromedriver_win32 (110.0.5481.30)"
         # 为了更快的启动，并保留之前的数据
         caps["noReset"] = True
         driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
@@ -68,6 +70,28 @@ class TestWebview(object):
         return driver
 
     def test_webview(self):
+        # 如果app未开启webview的调试属性，是无法分析内部的控件的，个别手机会默认打开此属性，需要研发配合打开webview的调试属性。
+        # Webview.setWebContentDebuggingEnabled(true)
+        # 查看webview进程 adb shell cat /proc/net/unix | grep webview
         self.driver.find_element(by=AppiumBy.XPATH, value="//*[@text='股票']").click()
         self.driver.find_element(by=AppiumBy.XPATH, value="//*[@text='更多券商开户']").click()
-        WebDriverWait(self.driver, 10, 1).until(EC.presence_of_element_located(MobileBy.ID, "更多券商开户"))
+        WebDriverWait(self.driver, 10, 1).until(
+            EC.presence_of_element_located((MobileBy.XPATH, "//*[@text='平安证券']")))
+        self.driver.find_element(by=AppiumBy.XPATH, value="//*[@text='平安证券']").click()
+
+    def test_webview_css(self):
+        '''
+        问题一： self.driver.contexts只有NATIVE_APP没有WebView
+        解决方案: 1、需要开发开启webview远程调试功能.修改Activity extends CordovaActivity，设置setWebContentsDebuggingEnabled(true)
+        '''
+        self.driver.find_element(by=AppiumBy.XPATH, value="//*[@text='期货']").click()
+        print(self.driver.contexts)
+        print(self.driver.current_context)
+        # self.driver.switch_to.context(self.driver.contexts[0]) # 从NATIVE_APP切换到webview
+        # print(self.driver.current_context)
+        self.driver.find_element(by=AppiumBy.CSS_SELECTOR,
+                                 value=".className").click()  # 可以从webview中去通过css获取页面元素,className就是页面中的class的名称
+        # 切换窗口 切换句柄时，需要加上一些等待，切换的太快会使下一个句柄找不到元素。
+        print(self.driver.window_handles)
+        self.driver.switch_to.window(self.driver.window_handles[1])  # 获取当前窗口字典中的第二个窗口句柄
+        self.driver.implicitly_wait(10)
