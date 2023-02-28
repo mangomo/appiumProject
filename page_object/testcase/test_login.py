@@ -1,11 +1,10 @@
-import time
-
 import pytest
 
 from page_object.page.App import App
 
 
 class TestLogin(object):
+
     @classmethod
     def setup_class(cls):
         cls.WelcomePage = App.start_WelcomePage()

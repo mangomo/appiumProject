@@ -1,0 +1,6 @@
+gotoLogin:
+  - locator: tv_login
+    by: id
+    action: click
+
+

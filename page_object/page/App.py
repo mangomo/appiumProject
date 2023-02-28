@@ -1,6 +1,6 @@
 from appium.webdriver.common.appiumby import AppiumBy
 
-from page_object.driver.AndroidClient import AndroidClient
+from page_object.driver.Client import Client
 from page_object.page.BasePage import BasePage
 from page_object.page.MainPage import MainPage
 from page_object.page.WelcomePage import WelcomePage

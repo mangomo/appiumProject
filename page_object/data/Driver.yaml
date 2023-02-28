@@ -1,0 +1,33 @@
+installApp:
+  server: http://127.0.0.1:4723/wd/hub
+  implicitly_wait: 10
+  caps:
+    android:
+      appium:platformName: Android
+      appium:platformVersion: "11.0"
+      appium:deviceName: mango
+      appium:appPackage: com.xueqiu.android
+      appium:appActivity: .view.WelcomeActivityAlias
+      appium:autoGrantPermissions: True
+    ios:
+      appium:platformName: ios
+
+restartApp:
+  server: http://127.0.0.1:4723/wd/hub
+  implicitly_wait: 10
+  caps:
+    android:
+      appium:platformName: Android
+      appium:platformVersion: "11.0"
+      appium:deviceName: mango
+      appium:appPackage: com.xueqiu.android
+      appium:appActivity: .view.WelcomeActivityAlias
+      appium:autoGrantPermissions: True
+      #    appium:unicodeKeyboard: True
+      #    appium:resetKeyboard: True
+      appium:noReset: True
+    ios:
+      appium:platformName: ios
+
+#支持多平台，每次改platform参数,根绝设置的参数找对应的配置数据
+platform: android

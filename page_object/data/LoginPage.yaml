@@ -1,0 +1,42 @@
+loginByAccount:
+  - locator: gt_one_login_switch_tv
+    by: id
+    action: click
+  - locator: login_outside
+    by: id
+    action: click
+  - element: login_account
+    action: sendkeys
+    text: $var1
+  - element: login_password
+    action: sendkeys
+    text: $var2
+  - locator: button_next
+    by: id
+    action: click
+  - locator: tv_agree
+    by: id
+    action: click
+
+getErrorMsg:
+  -xxx
+
+#抽离变化部分，通常Android与ios页面一致，使用用一个数据文件维护。小程序，移动端H5，web差别很大，需要独立封装成不同的数据文件。
+#封装层次不要太深，通常三层
+
+#根据不同平台查找对元素。
+elements:
+  login_account:
+    android:
+      by: id
+      locator: login_account
+    ios:
+      by: xpath
+      locator: xx
+  login_password:
+    android:
+      by: id
+      locator: login_password
+    ios:
+      by: xx
+      locator: xxx

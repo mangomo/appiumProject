@@ -1,7 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from selenium.common import NoSuchElementException
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 from page_object.page.BasePage import BasePage
 
 
@@ -48,6 +46,7 @@ class LoginPage(BasePage):
         return self
 
     def loginByAccount(self, account, password):
+        '''
         self.find(self._switch_phone_locator).click()
         self.find(self._login_outside).click()
         self.find(self._login_account).send_keys(account)
@@ -58,6 +57,9 @@ class LoginPage(BasePage):
         #     self.find(self._service_agreement).click()
         self.find(self._button_next).click()
         self.find(self._tv_agree).click()
+        '''
+
+        self.loadSteps("/data/LoginPage.yaml", "loginByAccount", var1=account, var2=password)
         return self
 
     def loginSuccessByAccount(self, account, password):
